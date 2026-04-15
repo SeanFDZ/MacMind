@@ -65,6 +65,17 @@ Each step generates a random 8-digit sequence,  runs the full forward pass,  com
 
 After training,  click **New Random** to generate a test input,  then **Permute** to run the trained model.  The output row shows the model's predictions and the confidence row shows how sure it is about each position.
 
+To verify the result,  apply the bit-reversal permutation by hand.  The output should rearrange the input positions in this order:
+
+```
+Output[0] = Input[0]        Output[4] = Input[1]
+Output[1] = Input[4]        Output[5] = Input[5]
+Output[2] = Input[2]        Output[6] = Input[3]
+Output[3] = Input[6]        Output[7] = Input[7]
+```
+
+For example,  input `[3, 7, 1, 9, 5, 2, 8, 4]` should produce `[3, 5, 1, 8, 7, 2, 9, 4]`.  If the model is well-trained,  every position will be correct with confidence above 90%.
+
 ### Attention Map (Card 4)
 
 The 8x8 grid visualizes which input positions the model attends to when producing each output position.  After training,  you should see the butterfly pattern: positions 0, 2, 5, 7 attend to themselves (fixed points of the permutation),  while positions 1 and 4 attend to each other,  and positions 3 and 6 attend to each other (swap pairs).
