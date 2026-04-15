@@ -129,11 +129,9 @@ All weights and activations are stored as comma-delimited numbers in hidden Hype
 
 ## Training on Real Hardware
 
-MacMind was trained on a Macintosh SE running System 7.6.1 through Basilisk II on Apple Silicon.  HyperTalk is interpreted,  and every multiply,  every field access,  every variable lookup goes through the interpreter.  Each training step takes several seconds.  Training to convergence (~1,000 steps) takes hours.
+MacMind was trained on a Macintosh SE running System 7.6.1 and has also been tested through Basilisk II on Apple Silicon.  HyperTalk is interpreted,  and every multiply,  every field access,  every variable lookup goes through the interpreter.  Each training step takes several seconds.  Training to convergence (~1,000 steps) takes hours.
 
 The model was left training overnight,  grinding through backpropagation one 8 MHz multiply-accumulate at a time.  By morning it had learned the permutation.
-
-On an emulator running on modern hardware (SheepShaver or Basilisk II on an Apple Silicon Mac),  the same training completes in minutes.
 
 ---
 
