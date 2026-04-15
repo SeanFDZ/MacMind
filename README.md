@@ -6,7 +6,7 @@ MacMind is a 1,216-parameter single-layer single-head transformer that learns th
 
 Option-click any button and read the actual math.
 
-<!-- TODO: Screenshot of Card 2 (Training) mid-training, showing progress bars and position accuracy grid -->
+![MacMind trained to step 1000 on a Macintosh SE/30](images/hero-trained-step1000.jpeg)
 
 ---
 
@@ -37,8 +37,6 @@ This permutation is the first step of the Fast Fourier Transform,  one of the mo
 
 After training,  the attention map on Card 4 reveals the butterfly routing pattern of the FFT.  The model independently discovered the same mathematical structure that Cooley and Tukey published in 1965.
 
-<!-- TODO: Screenshot of Card 4 (Attention Map) after training, showing the butterfly pattern -->
-
 ---
 
 ## The Stack
@@ -53,13 +51,21 @@ MacMind is a 5-card HyperCard stack:
 | **4 -- Attention Map** | Visualize the 8x8 attention weight matrix |
 | **5 -- About** | Plain-text explanation of what the model is doing |
 
-<!-- TODO: Screenshot of Card 3 (Inference) showing a correct prediction with confidence scores -->
-
 ### Training (Card 2)
 
 Click **Train 10** for 10 training steps,  or **Train to 100%** to train until the model gets a perfect score on a sample.  For deeper training,  run **Train 10** repeatedly or click **Train to 100%** again -- the model picks up where it left off.  For a longer run,  open the Message Box (Cmd-M) and type `trainN 1000` to train for 1,000 steps straight.
 
 Each step generates a random 8-digit sequence,  runs the full forward pass,  computes cross-entropy loss,  backpropagates gradients through every layer,  and updates all 1,216 weights.  Progress bars,  per-position accuracy,  and a training log update in real time.
+
+**Note:** The training log field has a 30,000 character limit (a HyperCard constraint).  After roughly 900 steps the log will fill up and HyperCard will display an error.  To clear it and continue,  open the Message Box (Cmd-M) and type:
+
+```
+put "" into card field "trainingLog"
+```
+
+Then resume training with `trainN 500` (or whatever number of steps you want).
+
+![Card 2 -- Blank stack ready to train](images/card2-blank.jpeg)
 
 ### Inference (Card 3)
 
@@ -76,6 +82,8 @@ Output[3] = Input[6]        Output[7] = Input[7]
 
 For example,  input `[3, 7, 1, 9, 5, 2, 8, 4]` should produce `[3, 5, 1, 8, 7, 2, 9, 4]`.  If the model is well-trained,  every position will be correct with confidence above 90%.
 
+![Card 3 -- Inference with correct prediction and confidence scores](images/card3-inference.jpeg)
+
 ### Attention Map (Card 4)
 
 The 8x8 grid visualizes which input positions the model attends to when producing each output position.  After training,  you should see the butterfly pattern: positions 0, 2, 5, 7 attend to themselves (fixed points of the permutation),  while positions 1 and 4 attend to each other,  and positions 3 and 6 attend to each other (swap pairs).
@@ -85,7 +93,7 @@ This is the same routing structure discovered by Cooley and Tukey in 1965 for th
 ![FFT Butterfly Diagram](https://upload.wikimedia.org/wikipedia/commons/9/98/Butterfly-FFT.png)
 *The classic FFT butterfly diagram ([public domain](https://en.wikipedia.org/wiki/Butterfly_diagram)).  The model discovers this structure independently through attention.*
 
-<!-- TODO: Screenshot of Card 4 (Attention Map) after training, showing the butterfly pattern -->
+![Card 4 -- Attention map showing learned routing pattern](images/card4-attention-map.jpeg)
 
 ---
 
